@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ficha Antropométrica Integral</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Ficha Antropométrica Integral</h2>
+
+        <h3>Datos personales</h3>
+        <table>
+            <tr>
+                <td><strong>Fecha evaluación</strong></td>
+                <td><input id="fechaEval" type="date"></td>
+                <td><strong>Documento</strong></td>
+                <td><input id="doc" type="text"></td>
+                <td><strong>Celular</strong></td>
+                <td>
+                    <input id="celular" type="number" oninput="validarCelular()">
+                    <div id="celularError" class="msg-error"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Nombre completo</strong></td>
+                <td><input id="nombre" type="text"></td>
+                <td><strong>Sexo</strong></td>
+                <td>
+                    <select id="sexo" onchange="calcTodasLasPruebas()"> <option value="">Seleccione</option>
+                        <option value="M">Masculino</option>
+                        <option value="F">Femenino</option>
+                    </select>
+                </td>
+                <td><strong>Correo</strong></td>
+                <td>
+                    <input id="correoPaciente" oninput="validarCorreo()">
+                    <div id="correoError" class="msg-error"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Fecha nacimiento</strong></td>
+                <td><input id="nacimiento" type="date" oninput="calcEdad()"></td>
+                <td><strong>Edad</strong></td>
+                <td>
+                    <input id="edad" class="auto" readonly>
+                    <div id="edadError" class="msg-error"></div>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+
+        <h3>Antropometría</h3>
+        <table>
+            <tr class="subheader"><td colspan="4">Medidas básicas</td></tr>
+            <tr>
+                <td><strong>Peso</strong> (kg)</td>
+                <td>
+                    <input id="peso" type="number" step="0.1" oninput="validarPeso(); calcIMC();">
+                    <div id="pesoError" class="msg-error"></div>
+                </td>
+                <td><strong>Altura</strong> (cm)</td>
+                <td>
+                    <input id="altura" type="number" oninput="validarEstatura(); calcIMC(); clasComplexion();">
+                    <div id="alturaError" class="msg-error"></div>
+                </td>
+            </tr>
+
+            <tr class="subheader"><td colspan="4">Complexión</td></tr>
+            <tr>
+                <td><strong>Circ. muñeca</strong> (cm)</td>
+                <td><input id="muneca" type="number" step="0.1" oninput="clasComplexion()"></td>
+                <td colspan="2">
+                    <input id="compClas" class="auto" readonly>
+                    <span class="small-ref">(Robinson, 1990)</span>
+                </td>
+            </tr>
+
+            <tr class="subheader"><td colspan="4">Índice de masa corporal</td></tr>
+            <tr>
+                <td><strong>IMC</strong></td>
+                <td><input id="imc" class="auto" readonly></td>
+                <td id="imcClasCell" colspan="2">
+                    <input id="imcClas" class="auto" readonly>
+                    <span class="small-ref">(OMS, 2020)</span>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Peso ideal</strong></td>
+                <td colspan="3">
+                    <input id="pesoIdeal" class="auto" readonly>
+                    <span class="small-ref">IMC 18.5–24.9</span>
+                </td>
+            </tr>
+
+            <tr class="subheader"><td colspan="4">Distribución de grasa</td></tr>
+            <tr>
+                <td><strong>Cintura</strong> (cm)</td>
+                <td><input id="cintura" type="number" oninput="calcRCC()"></td>
+                <td><strong>Cadera</strong> (cm)</td>
+                <td><input id="cadera" type="number" oninput="calcRCC()"></td>
+            </tr>
+            <tr>
+                <td><strong>Relación C/C</strong></td>
+                <td><input id="rcc" class="auto" readonly></td>
+                <td id="rccClasCell" colspan="2">
+                    <input id="rccClas" class="auto" readonly>
+                    <span class="small-ref">(OMS, 2011)</span>
+                </td>
+            </tr>
+
+            <tr class="subheader"><td colspan="4">Frecuencia cardiaca</td></tr>
+            <tr>
+                <td><strong>FC reposo</strong></td>
+                <td><input id="fc" type="number" oninput="clasFC()"></td>
+                <td id="fcClasCell" colspan="2">
+                    <input id="fcClas" class="auto" readonly>
+                    <span class="small-ref">(AHA, 2020)</span>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>FCM (Tanaka)</strong></td>
+                <td><input id="fcm" class="auto" readonly></td>
+                <td colspan="2"><span class="small-ref">(Tanaka, 2001)</span></td>
+            </tr>
+
+            <tr class="subheader"><td colspan="4">Porcentaje de grasa corporal</td></tr>
+            <tr>
+                <td><strong>Actividad física</strong></td>
+                <td colspan="3">
+                    <select id="actividad" onchange="clasificarGrasa()">
+                        <option value="">Seleccione</option>
+                        <option value="promedio">Promedio (J&P)</option>
+                        <option value="deportista">Deportista (D&W)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>% grasa J&P</strong></td>
+                <td><input id="grasaJP" type="number" step="0.1" oninput="clasificarGrasa()"></td>
+                <td id="jpClasCell" colspan="2">
+                    <input id="grasaJPClas" class="auto" readonly>
+                    <span class="small-ref">(Jackson & Pollock, 1978)</span>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>% grasa D&W</strong></td>
+                <td><input id="grasaDW" class="auto" readonly></td>
+                <td id="dwClasCell" colspan="2">
+                    <input id="grasaDWClas" class="auto" readonly>
+                    <span class="small-ref">(Durnin & Womersley, 1974)</span>
+                </td>
+            </tr>
+        </table>
+
+        <h3>Pruebas Físicas</h3>
+        <table>
+            <tr>
+                <th>Prueba</th>
+                <th>Unidad</th>
+                <th>Dato 1</th>
+                <th>Dato 2</th>
+                <th>Resultado</th>
+                <th>Clasificación</th>
+                <th>Referencia</th>
+            </tr>
+            <tr>
+                <td>Burpee</td>
+                <td>reps</td>
+                <td><input id="bur1" type="number" oninput="calcBurpee()"></td>
+                <td><input id="bur2" type="number" oninput="calcBurpee()"></td>
+                <td><input id="burRes" class="auto" readonly></td>
+                <td><input id="burClas" class="auto" readonly></td>
+                <td><small>Burpee 1940</small></td>
+            </tr>
+            <tr>
+                <td>Abdominales</td>
+                <td>reps</td>
+                <td><input id="ab1" type="number" oninput="calcAbd()"></td>
+                <td><input id="ab2" type="number" oninput="calcAbd()"></td>
+                <td><input id="abRes" class="auto" readonly></td>
+                <td><input id="abClas" class="auto" readonly></td>
+                <td><small>ACSM 2022</small></td>
+            </tr>
+            <tr>
+                <td>Sentadillas</td>
+                <td>reps</td>
+                <td><input id="pier1" type="number" oninput="calcPiernas()"></td>
+                <td><input id="pier2" type="number" oninput="calcPiernas()"></td>
+                <td><input id="pierRes" class="auto" readonly></td>
+                <td><input id="pierClas" class="auto" readonly></td>
+                <td><small>IOM 2012</small></td>
+            </tr>
+            <tr>
+                <td>Flexiones</td>
+                <td>reps</td>
+                <td><input id="flex1" type="number" oninput="calcFlex()"></td>
+                <td><input id="flex2" type="number" oninput="calcFlex()"></td>
+                <td><input id="flexRes" class="auto" readonly></td>
+                <td><input id="flexClas" class="auto" readonly></td>
+                <td><small>CSEP 2013</small></td>
+            </tr>
+            <tr>
+                <td>Suspensión en barra</td>
+                <td>seg</td>
+                <td><input id="hang1" type="number" oninput="calcHang()"></td>
+                <td><input id="hang2" type="number" oninput="calcHang()"></td>
+                <td><input id="hangRes" class="auto" readonly></td>
+                <td><input id="hangClas" class="auto" readonly></td>
+                <td><small>EUROFIT 1988</small></td>
+            </tr>
+            <tr>
+                <td>Test de Cooper</td>
+                <td>metros</td>
+                <td><input id="coopDist" type="number" oninput="calcCooper()"></td>
+                <td>-</td>
+                <td><input id="coopRes" class="auto" readonly></td>
+                <td><input id="coopClas" class="auto" readonly></td>
+                <td><small>Cooper 1968</small></td>
+            </tr>
+        </table>
+
+        <h3>Profesional</h3>
+        <table>
+            <tr>
+                <td><strong>Nombre</strong></td>
+                <td><input id="profNombre"></td>
+                <td><strong>Correo</strong></td>
+                <td><input id="profCorreo"></td>
+            </tr>
+            <tr>
+                <td><strong>Registro</strong></td>
+                <td><input id="profReg"></td>
+                <td><strong>Fecha</strong></td>
+                <td><input id="profFecha" type="date"></td>
+            </tr>
+        </table>
+
+        <h3>Retroalimentación de capacidades físicas</h3>
+        <div id="feedbackCapacidades" class="retro-box">
+            (Complete las pruebas físicas para ver la retroalimentación automática)
+        </div>
+
+        <button class="print-btn" onclick="window.print()">
+            🖨 Imprimir / Guardar como PDF
+        </button>
+
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            Nutricionista Dietista <strong>Paula&nbsp;Gallego</strong> · NutriMente<br>
+            © <span id="yearFooter"></span> Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="funciones.js"></script>
+
+    <script>
+        /* Inicialización de fechas */
+        document.addEventListener("DOMContentLoaded", () => {
+            const hoy = new Date();
+            const yyyy = hoy.getFullYear();
+            const mm = String(hoy.getMonth() + 1).padStart(2, "0");
+            const dd = String(hoy.getDate()).padStart(2, "0");
+            
+            const fechaInput = document.getElementById("fechaEval");
+            const profFecha = document.getElementById("profFecha");
+            
+            if(fechaInput) fechaInput.value = `${yyyy}-${mm}-${dd}`;
+            if(profFecha) profFecha.value = `${yyyy}-${mm}-${dd}`;
+            document.getElementById("yearFooter").textContent = yyyy;
+        });
+    </script>
+
+</body>
+</html>

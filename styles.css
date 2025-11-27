@@ -1,0 +1,184 @@
+/* ======== BASE ======== */
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f5f9;
+    margin: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    border: 1px solid #e0e4ea;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 24px;
+    color: #223048;
+}
+
+h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #32415b;
+    border-left: 4px solid #4f8ddf;
+    padding-left: 8px;
+}
+
+/* ======== TABLAS ======== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    background: #fafbff;
+}
+
+th, td {
+    border: 1px solid #d5dde8;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+th {
+    background: #e4ebf7;
+    text-align: left;
+    font-weight: 600;
+    color: #283347;
+}
+
+tr:nth-child(even) td {
+    background: #fdfefe;
+}
+
+.subheader td {
+    background: #f0f4ff;
+    font-weight: 600;
+    color: #293449;
+    text-align: center;
+}
+
+/* ======== INPUTS ======== */
+input, select {
+    width: 100%;
+    padding: 6px 7px;
+    border-radius: 6px;
+    border: 1px solid #b5c0d0;
+    box-sizing: border-box;
+    font-size: 12px;
+}
+
+/* Campos automáticos */
+.auto {
+    background: #f5f6fa;
+    color: #555;
+    font-style: italic;
+    border: 1px solid #d1d1d1;
+    pointer-events: none; /* Evita escritura manual */
+}
+
+/* Textos pequeños */
+.small-ref {
+    font-size: 11px;
+    font-style: italic;
+    color: #666;
+    float: right;
+    margin-top: 2px;
+}
+
+/* ======== SEMÁFOROS (Clases que el JS puede usar) ======== */
+.bg-excelente { background: #c9f7c5 !important; }
+.bg-bueno { background: #c7ddff !important; }
+.bg-medio { background: #fff6b8 !important; }
+.bg-bajo { background: #ffd9a6 !important; }
+.bg-malo { background: #ffc0c0 !important; }
+
+/* ======== BOTÓN IMPRIMIR ======== */
+.print-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #424040;  
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    padding: 12px 32px;
+    font-size: 17px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(30, 29, 29, 0.612);
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.25s ease;
+}
+
+.print-btn:hover {
+    background: #171f19;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+
+/* ======== VALIDACIÓN VISUAL ======== */
+.input-error {
+    border: 2px solid #d9534f !important;
+    background: #ffe6e6 !important;
+}
+
+.msg-error {
+    font-size: 11px;
+    color: #d9534f;
+    font-style: italic;
+    margin-top: 3px;
+    min-height: 15px;
+}
+
+/* ======== RETROALIMENTACIÓN ======== */
+.retro-box {
+    background: #f7faff;
+    border: 1px solid #cdd8ee;
+    padding: 15px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    color: #283347;
+}
+
+.retro-title {
+    font-weight: 700;
+    color: #1f2d48;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-size: 13px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 2px;
+}
+
+/* ======== FOOTER ======== */
+.footer {
+    margin-top: 40px;
+    padding: 15px 10px;
+    text-align: center;
+    border-top: 1px solid #d8dfe8;
+    color: #38445a;
+    font-size: 13px;
+    background: #f7f9fc;
+    border-radius: 6px;
+}
+
+/* Solo para impresión */
+@media print {
+    body { background:#fff; margin:0; }
+    .container { box-shadow:none; border:none; width: 100%; max-width: 100%; padding: 0; }
+    .print-btn { display:none; }
+    .footer { position: static; border: none; background: transparent; }
+    input { border: none; background: transparent; padding: 0; }
+    .auto { background: transparent; border: none; font-style: normal; color: #000; }
+}
